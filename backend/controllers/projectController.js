@@ -1,21 +1,21 @@
-const Project = require('../models/Project');
+const Project = require('../models/project');
 
-// GET all projects of logged-in user
 const getProjects = async (req, res) => {
   try {
     const projects = await Project.find({ userId: req.user.id }).sort({ createdAt: -1 });
-    res.json(projects);
+    res.status(200).json(projects); // explicitly set status
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // GET single project by ID
 const getProjectById = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ message: 'Project not found' });
-    res.json(project);
+    res.status(200).json(project); // explicitly set 200
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -34,7 +34,7 @@ const addProject = async (req, res) => {
       budgetMax,
       deadline
     });
-    res.status(201).json(project);
+    res.status(201).json(project); // 201 for creation
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -61,7 +61,7 @@ const updateProject = async (req, res) => {
     project.deadline = deadline ?? project.deadline;
 
     const updated = await project.save();
-    res.json(updated);
+    res.status(200).json(updated); // explicitly set 200
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -79,7 +79,7 @@ const deleteProject = async (req, res) => {
     }
 
     await project.deleteOne();
-    res.json({ message: 'Project deleted' });
+    res.status(200).json({ message: 'Project deleted' }); // explicitly set 200
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

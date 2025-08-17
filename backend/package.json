@@ -4,10 +4,10 @@
   "description": "Backend for Task Manager App",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "prod": "node server.js"
+    "prod": "node server.js",
+    "test": "mocha ./test --exit"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
